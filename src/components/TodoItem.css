@@ -1,0 +1,19 @@
+.item{
+	display: flex;
+	align-items: center;
+	width: 80%;
+	background-color:  rgb(230, 233, 222);
+	margin-top: 16px;
+	height: 50px;
+	border-radius: 8px;
+}
+
+.item>p{
+	flex:1;
+	font-family: Arial, sans-serif;
+}
+
+.item--done{
+	text-decoration: line-through;
+}
+
