@@ -1,36 +1,34 @@
-import React from "react"
-import Checkbox from '@material-ui/core/Checkbox'
-import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
-import DeleteIcon from '@material-ui/icons/Delete';
-import "./TodoItem.css"
-import {useDispatch} from "react-redux"
-import {setChecked, removeItem} from "../features/todoSlice"
+import React, { useContext, useState } from "react";
+import Checkbox from "@material-ui/core/Checkbox";
+import DeleteIcon from "@material-ui/icons/Delete";
+import "./TodoItem.css";
+import Context from "../reducer";
 
-const TodoItem = ({name, done, id}) => {
-	const dispatch = useDispatch()
+const TodoItem = ({ data, id }) => {
+  const [, dispatch] = useContext(Context);
+  const [checked, setChecked] = useState(false);
 
-	const handleChange = ()=> {
-		dispatch(setChecked(id))
-	}
-	const handleclick = ()=>{
-		dispatch(removeItem(id))
-	}
+  function handleClick() {
+    dispatch({
+      type: "REMOVE_TODO",
+      id: id,
+    });
+  }
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+  };
 
-	return(
-		<div className="item">
-			<Checkbox
-        	checked={done}
-        	color = "primary"
-        	onChange={handleChange}
-        	inputProps={{ 'aria-label': 'primary checkbox' }}
-      		/>
-			<p className={done && 'item--done'}>{name}</p>
-			<IconButton aria-label="delete" onClick={handleclick}>
-  				<DeleteIcon />
-			</IconButton>
-		</div>
-		)
-}
+  return (
+    <div className="task">
+      <Checkbox
+        checked={checked}
+        onChange={handleChange}
+        inputProps={{ "aria-label": "primary checkbox" }}
+      />
+      <p className={checked ? "item--done" : null}>{data}</p>
+      <DeleteIcon onClick={handleClick} />
+    </div>
+  );
+};
 
 export default TodoItem;
